@@ -124,6 +124,12 @@ def artistasUpdate(request):
         context={'artistas': artistas}
         return render(request, 'artistas/artistas_list.html', context)
     
+def crud_generos(request):
+    generos= Genero.objects.all()
+    context={'generos': generos}
+    print("Enviando datos a generos_list")
+    return render(request,"artistas/generos_list.html", context)
+
 
 
         
