@@ -173,33 +173,33 @@ def generos_del(request, pk):
         context={'mensaje': mensaje, 'generos': generos}
         return render(request, 'artistas/generos_list.html', context)
     
-    def generos_edit(request,pk):
-        try:
-            genero=Genero.objects.get(id_genero=pk)
-            context={}
-            if genero:
-                print("Se encontro el género a editar")
-                if request.method=="POST":
-                    print("edit, es un post")
-                    form= GeneroForm(request.POST, instance=genero)
-                    form.save()
-                    mensaje= "Dato actualizado con exito"
-                    print(mensaje)
-                    context= {'genero': genero, 'form': form, 'mensaje': mensaje}
-                    return render(request, 'artistas/generos_edit.html', context)
-                else: 
-                    #metodo no es POST
-                    print("edit NO es un POST")
-                    form=GeneroForm(instance=genero)
-                    mensaje=""
-                    context={'genero': genero, 'form': form, 'mensaje': mensaje}
-                    return render(request, 'artistas/generos_edit.html', context)
-        except:
-            print("Error, el género a editar no existe.")
-            generos=Genero.objects.all()
-            mensaje= "Erros, el género a editar no existe."
-            context= {'mensaje': mensaje, 'generos': generos}
-            return render(request, 'artistas/generos_list.html, context')
+def generos_edit(request,pk):
+    try:
+        genero=Genero.objects.get(id_genero=pk)
+        context={}
+        if genero:
+            print("Se encontro el género a editar")
+            if request.method=="POST":
+                print("edit, es un post")
+                form= GeneroForm(request.POST, instance=genero)
+                form.save()
+                mensaje= "Dato actualizado con exito"
+                print(mensaje)
+                context= {'genero': genero, 'form': form, 'mensaje': mensaje}
+                return render(request, 'artistas/generos_edit.html', context)
+            else: 
+                #metodo no es POST
+                print("edit NO es un POST")
+                form=GeneroForm(instance=genero)
+                mensaje=""
+                context={'genero': genero, 'form': form, 'mensaje': mensaje}
+                return render(request, 'artistas/generos_edit.html', context)
+    except:
+        print("Error, el género a editar no existe.")
+        generos=Genero.objects.all()
+        mensaje= "Erros, el género a editar no existe."
+        context= {'mensaje': mensaje, 'generos': generos}
+        return render(request, 'artistas/generos_list.html, context')
         
         
 
