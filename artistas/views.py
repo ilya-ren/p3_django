@@ -154,6 +154,54 @@ def generosAdd(request):
         context={'form': form}
         return render(request, 'artistas/generos_add.html', context)
 
+def generos_del(request, pk):
+    mensajes=[]
+    errores=[]
+    generos= Genero.objects.all()
+    try:
+        genero=Genero.objects.get(id_genero=pk)
+        context={}
+        if genero:
+            genero.delete()
+            mensajes.append("Hecho. Datos eliminados...")
+            context= {'generos': generos, 'mensajes': mensajes, 'errores': errores}
+            return render(request, 'artistas/generos_list.html', context)
+    except:
+        print("Error, el id ingresado no existe.")
+        generos=Genero.objects.all()
+        mensaje= "Error, el id ingresado no existe."
+        context={'mensaje': mensaje, 'generos': generos}
+        return render(request, 'artistas/generos_list.html', context)
+    
+    def generos_edit(request,pk):
+        try:
+            genero=Genero.objects.get(id_genero=pk)
+            context={}
+            if genero:
+                print("Se encontro el género a editar")
+                if request.method=="POST":
+                    print("edit, es un post")
+                    form= GeneroForm(request.POST, instance=genero)
+                    form.save()
+                    mensaje= "Dato actualizado con exito"
+                    print(mensaje)
+                    context= {'genero': genero, 'form': form, 'mensaje': mensaje}
+                    return render(request, 'artistas/generos_edit.html', context)
+                else: 
+                    #metodo no es POST
+                    print("edit NO es un POST")
+                    form=GeneroForm(instance=genero)
+                    mensaje=""
+                    context={'genero': genero, 'form': form, 'mensaje': mensaje}
+                    return render(request, 'artistas/generos_edit.html', context)
+        except:
+            print("Error, el género a editar no existe.")
+            generos=Genero.objects.all()
+            mensaje= "Erros, el género a editar no existe."
+            context= {'mensaje': mensaje, 'generos': generos}
+            return render(request, 'artistas/generos_list.html, context')
+        
+        
 
 
         
