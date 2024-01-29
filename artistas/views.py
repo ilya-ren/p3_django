@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .models import Artista, Genero
 from django.http import HttpResponseRedirect
+
+from .forms import GeneroForm
 # Create your views here.
 
 
@@ -129,6 +131,28 @@ def crud_generos(request):
     context={'generos': generos}
     print("Enviando datos a generos_list")
     return render(request,"artistas/generos_list.html", context)
+
+
+def generosAdd(request):
+    print("Te encuentras en el controlador para agregar Género")
+    context={}
+
+    if request.method=="POST":
+        print("controlador es un post...")
+        form= GeneroForm(request.POST)
+        if form.is_valid:
+            print("agregar, is_valid")
+            form.save()
+
+            #limpiarform
+            form=GeneroForm()
+
+            context={'mensaje': "Datos guardados con exito", "form":form}
+            return render(request, 'artistas/generos_add,html', context)
+    else:
+        form= GeneroForm()
+        context={'form': form}
+        return render(request, 'artistas/generos_add.html', context)
 
 
 
