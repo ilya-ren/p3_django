@@ -38,8 +38,8 @@
                     <td>{{x.rut}}
                     <td>{{x.nombre}}
                     <td>{{x.ap_paterno}}
-                   
-                    <td> <a href="{% url artistas_finEdit' pk= x.rut}"> Modificar</a>    
+                    <td><a href="{% url 'artistas_del' pk=x.rut %}"> Eliminar</a>
+                    <td> <a href="{% url 'artistas_finEdit' pk= x.rut %}"> Modificar</a>    
                 </tr>
             {% endfor %}
         {% endif %}
